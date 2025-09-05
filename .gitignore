@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+Commande ECHO activ‚e.
+# Secrets
+.env
+**/.env
+Commande ECHO activ‚e.
+# On versionne le template et les scripts,
+# mais on ignore les instances qui ont leurs propres repos
+/instances/
