@@ -7,8 +7,7 @@ C:\Users\me\companion-factory\.venv\Scripts\activate
 cd /d C:\Users\me\companion-factory\instances\demo06
 set "TOKEN=dev-123"
 flask --app app run -p 5000
-markdown
-Copier le code
+
 
 ## Smoke (local)
 
@@ -16,15 +15,12 @@ Copier le code
 curl.exe -s -o NUL -w "HEALTH %{http_code}\n" http://127.0.0.1:5000/health
 curl.exe -s -o NUL -w "SEND %{http_code}\n"   -X POST "http://127.0.0.1:5000/internal/send?format=text" -H "X-Token: %TOKEN%" -H "Content-Type: application/json" -d "{\"text\":\"ping\"}"
 curl.exe -s -o NUL -w "CHECKIN %{http_code}\n" -X POST "http://127.0.0.1:5000/internal/checkin" -H "X-Token: %TOKEN%" -H "Content-Type: application/json" -d "{\"dry_run\":true}"
-markdown
-Copier le code
+
 
 ## Smoke (prod)
 
 set "BASE=https://<service>.onrender.com"
 instances\demo06\ops\smoke_prod.bat %BASE% %TOKEN%
-markdown
-Copier le code
 
 ## Diag (prod)
 
