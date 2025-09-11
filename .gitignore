@@ -1,12 +1,22 @@
-# Python
+# Bytecode / venv / caches
 __pycache__/
 *.pyc
 .venv/
-Commande ECHO activ‚e.
-# Secrets
+
+# Secrets (ne jamais commit)
 .env
 **/.env
-Commande ECHO activ‚e.
-# On versionne le template et les scripts,
-# mais on ignore les instances qui ont leurs propres repos
+
+# DB locales
+local.db
+local.db-wal
+local.db-shm
+
+# On ignore toutes les instances...
 /instances/
+
+# ...SAUF les scripts d'ops de demo06 que l'on versionne
+!instances/
+!instances/demo06/
+!instances/demo06/ops/
+!instances/demo06/ops/*.bat
