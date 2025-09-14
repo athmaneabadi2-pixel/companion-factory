@@ -48,9 +48,8 @@ python -c "import sqlite3;con=sqlite3.connect('db/messages.db');c=con.cursor();p
 ## Astuce sécurité
 Quand prêt: VERIFY_TWILIO_SIGNATURE=true + PUBLIC_WEBHOOK_URL exact (Render). Les tests webhook “synthetic” renverront 401/403 (normal).
 
-## Coup d'œil DB (SQLite local — demo06)
-
-> À exécuter **depuis la racine du repo** (ce dossier).
+## Coup d'œil DB (SQLite local — demo06, auto created_at/ts)
 
 ```bat
-python -c "import os,sqlite3;db=os.path.join('instances','demo06','local.db');con=sqlite3.connect(db);cur=con.cursor();cur.execute(\"SELECT direction, substr(coalesce(text,''),1,40) AS preview, created_at FROM messages ORDER BY created_at DESC LIMIT 5\");[print(r) for r in cur.fetchall()];con.close()"
+python -c "import os,sqlite3;db=os.path.join('instances','demo06','local.db');con=sqlite3.connect(db);cur=con.cursor();cols=[r[1] for r in cur.execute('PRAGMA table_info(messages)')];t='created_at' if 'created_at' in cols else 'ts';cur.execute('SELECT direction, substr(text,1,40) AS preview, ' + t + ' FROM messages ORDER BY ' + t + ' DESC LIMIT 5');[print(r) for r in cur.fetchall()];con.close()"
+
