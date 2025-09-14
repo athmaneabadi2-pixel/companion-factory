@@ -1,22 +1,33 @@
-# Bytecode / venv / caches
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
 .venv/
+env/
+venv/
 
-# Secrets (ne jamais commit)
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Env & local DB
 .env
-**/.env
-
-# DB locales
+*.env
 local.db
-local.db-wal
-local.db-shm
+*.sqlite3
+*.db
 
-# On ignore toutes les instances...
-/instances/
+# Logs & cache
+*.log
+pytest_cache/
+*.tmp
 
-# ...SAUF les scripts d'ops de demo06 que l'on versionne
-!instances/
-!instances/demo06/
-!instances/demo06/ops/
-!instances/demo06/ops/*.bat
+# Build/Dist
+build/
+dist/
+
+# Instances locales (non versionnées)
+instances/
