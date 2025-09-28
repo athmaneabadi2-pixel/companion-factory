@@ -26,3 +26,7 @@ instances/**/*.db
 instances/**/*.db-shm
 instances/**/*.db-wal
 
+instances/
+**/.venv/
+**/__pycache__/
+.env
