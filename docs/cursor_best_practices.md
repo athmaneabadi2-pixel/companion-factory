@@ -1,21 +1,19 @@
-# Cursor - Bonnes pratiques (D3-A)
+# Cursor â€” Bonnes pratiques (D3-A)
 
-## RŠgles (8)
-1. Une intention par message. Prompts courts (=3 phrases).
-2. Ancre au code: cite fichier, fonction, ligne. Utilise la s‚lection (chat sur surlignage).
-3. ItŠre petit: "ne modifie que la fonction X", "propose un diff".
-4. Demande un plan (5 points) puis applique ‚tape par ‚tape.
-5. Garde le contr“le: "explique tes changements", "liste risques / TODO".
-6. Refactor guid‚: PEP8, types, fonctions pures, s‚paration I/O vs logique.
-7. Tests rapides: demande un test minimal et un script de run local.
-8. Contexte cibl‚: colle extraits docs/projets utiles, ‚vite le bruit.
+## RÃ¨gles (8)
+1. Une intention par message (â‰¤3 phrases).
+2. Ancre au code : fichier, fonction, lignes (utilise la sÃ©lection).
+3. Petites itÃ©rations : â€œne modifie que Xâ€, â€œpropose un diffâ€.
+4. Demande un plan (5 points) avant dâ€™appliquer.
+5. ContrÃ´le : â€œexplique tes changementsâ€, â€œliste risques/TODOâ€.
+6. Refactor guidÃ© : PEP8, types, fonctions pures (I/O sÃ©parÃ©es).
+7. Tests rapides : un test minimal + script de run local.
+8. Contexte ciblÃ© : extraits utiles, zÃ©ro bruit.
 
 ## Prompts types (FR)
-- "Lis %%FILE%% ligne %%N%%-%%M%%. Dis-moi ce que fait la fonction."
-- "Propose un diff minimal pour corriger %%BUG%% sans changer l'API."
-- "Refactor en fonction pure (I/O hors de la fonction). Ajoute types."
-- "cris un test pytest minimal pour %%FUNC%%. N'ajoute rien d'autre."
-- "Pr‚pare un plan en 5 ‚tapes pour impl‚menter %%FEATURE%%. Attends validation."
-- "Explique les risques et ajoute 3 TODO en commentaires."
-
-> Astuce: si d‚rive, ouvre un nouveau chat avec un r‚sum‚ de contexte.
+- "Lis %FILE% ligne %N%-%M%. Dis ce que fait la fonction."
+- "Diff minimal pour corriger %BUG% sans changer l'API."
+- "Refactor en fonction pure (I/O dehors) + types."
+- "Ã‰cris un test pytest minimal pour %FUNC%."
+- "Plan en 5 Ã©tapes pour %FEATURE%. Attends validation."
+- "Liste 3 risques et ajoute 3 TODO en commentaires."
