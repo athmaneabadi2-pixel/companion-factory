@@ -30,3 +30,15 @@ instances/
 **/.venv/
 **/__pycache__/
 .env
+
+
+# Ignore toutes les instances générées (env, logs, etc.)
+instances/*
+
+# MAIS autorise ces 2 fichiers de documentation/placeholder :
+!instances/.gitkeep
+!instances/README.md
+
+# Secrets génériques
+.env
+instances/**/.env
