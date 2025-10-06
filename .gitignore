@@ -1,56 +1,65 @@
-# Python
+# -------- Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+*.dylib
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.tox/
+.nox/
+.coverage
+coverage.xml
+
+# -------- Virtual envs
 .venv/
-Commande ECHO activ‚e.
-# Secrets
+.venv*/
+venv/
+env/
+
+# -------- Editors / OS
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+
+# -------- Logs & temp
+*.log
+*.tmp
+*.swp
+*.swo
+
+# -------- Secrets (dotenv) — ne JAMAIS committer
 .env
+.env.*
 **/.env
-Commande ECHO activ‚e.
-# On versionne le template et les scripts,
-# mais on ignore les instances qui ont leurs propres repos
-# --- root ignores ---
-.env
-.venv/
-__pycache__/
-*.pyc
+**/.env.*
 
-# ignore all instances by default, but keep demo06
+# -------- SQLite / fichiers DB locaux
+*.db
+*.db-shm
+*.db-wal
+
+# -------- Cursor (optionnel)
+.cursor/
+.cursor-history/
+
+# -------- Companion Factory — instances générées (toujours ignorées)
 instances/*
-!instances/demo06/
-!instances/demo06/**
 
-# local sqlite/env under instances
+# Autoriser UNIQUEMENT ces 2 fichiers dans instances/
+!instances/.gitkeep
+!instances/README.md
+
+# Redondance explicite pour éviter tout accident (ok, n'affecte pas README/.gitkeep)
 instances/**/.env
 instances/**/*.db
 instances/**/*.db-shm
 instances/**/*.db-wal
-
-instances/*
-**/.venv/
-**/__pycache__/
-.env
-
-
-# Ignore toutes les instances générées (env, logs, etc.)
-instances/*
-
-# MAIS autorise ces 2 fichiers de documentation/placeholder :
-!instances/.gitkeep
-!instances/README.md
-
-# Secrets génériques
-.env
-instances/**/.env
-
-
-# Ignore toutes les instances générées
-instances/*
-
-# Autoriser ces 2 fichiers de doc/placeholder
-!instances/.gitkeep
-!instances/README.md
-
-# Secrets
-.env
-instances/**/.env
