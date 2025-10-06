@@ -26,7 +26,7 @@ instances/**/*.db
 instances/**/*.db-shm
 instances/**/*.db-wal
 
-instances/
+instances/*
 **/.venv/
 **/__pycache__/
 .env
@@ -40,5 +40,17 @@ instances/*
 !instances/README.md
 
 # Secrets génériques
+.env
+instances/**/.env
+
+
+# Ignore toutes les instances générées
+instances/*
+
+# Autoriser ces 2 fichiers de doc/placeholder
+!instances/.gitkeep
+!instances/README.md
+
+# Secrets
 .env
 instances/**/.env
