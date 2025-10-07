@@ -52,14 +52,20 @@ if run_crew:
             verbose=True
         )
         t_plan_dev = Task(
-            description=f"Écris un plan concis (5 points) pour créer l’instance '{label}' en local, "
-                        f"puis indique les fichiers attendus et les risques.",
-            agent=dev, expected_output="Markdown en 5 points + liste de fichiers + 3 risques."
+        description=(f"Écris un plan concis (5 points) pour créer l’instance '{label}' en local "
+                 f"à partir de notre template MINIMAL. Les SEULS fichiers attendus sont: `.env` et `smoke_test.bat`. "
+                 f"N'ajoute pas d'autres fichiers. Liste aussi 3 risques."),
+        agent=dev,
+        expected_output="Markdown en 5 points + ['.env','smoke_test.bat'] + 3 risques."
         )
+
         t_plan_test = Task(
-            description=f"Écris les critères de test pour l’instance '{label}' : endpoints, codes HTTP, et condition de succès.",
-            agent=tester, expected_output="Checklist de critères (codes attendus) + condition de succès."
+        description=(f"Écris les critères de test pour l’instance '{label}' avec nos endpoints réels : "
+                 f"`/health` et `/internal/send` doivent renvoyer 200. Formule une checklist courte."),
+        agent=tester,
+        expected_output="Checklist endpoints + codes attendus + condition de succès."
         )
+
         crew = Crew(agents=[dev, tester], tasks=[t_plan_dev, t_plan_test], process=Process.sequential)
         _ = crew.kickoff()
         plan_done = True
