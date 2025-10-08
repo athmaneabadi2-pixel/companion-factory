@@ -63,3 +63,4 @@ instances/**/.env
 instances/**/*.db
 instances/**/*.db-shm
 instances/**/*.db-wal
+docs/last_run.json
