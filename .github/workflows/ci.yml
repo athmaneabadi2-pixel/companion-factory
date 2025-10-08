@@ -16,7 +16,7 @@ jobs:
       - name: Run tests (server auto-start by tests)
         env:
           START_LOCAL: "1"
-          START_CMD: ".\\scripts\\run_server.bat"   # ou "python app.py" selon ton repo
+          START_CMD: "python server.py"
           BASE_URL: "http://127.0.0.1:5000"
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           INTERNAL_TOKEN: ${{ secrets.INTERNAL_TOKEN }}
