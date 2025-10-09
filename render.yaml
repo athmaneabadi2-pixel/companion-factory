@@ -7,13 +7,14 @@ services:
     region: frankfurt
     envVars:
       - key: PYTHON_VERSION
-        value: 3.8.1
+        value: 3.11.9
       - key: TIMEZONE
         value: Europe/Paris
       - key: INTERNAL_TOKEN
         sync: false       # ⚠️ à définir dans Render (pas dans git)
       - key: OPENAI_API_KEY
         sync: false       # ⚠️ à définir dans Render (pas dans git)
-    buildCommand: pip install -r requirements.txt || pip install flask python-dotenv requests
+    buildCommand: pip install -r requirements.txt
+
     startCommand: gunicorn -w 1 -k gthread -b 0.0.0.0:$PORT server:app
     healthCheckPath: /health
