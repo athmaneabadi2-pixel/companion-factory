@@ -26,4 +26,3 @@ def twilio_inbound():
     reply = f"Echo: {body or '👋 hello from Companion Factory on Render'}"
     twiml = f'<?xml version="1.0" encoding="UTF-8"?><Response><Message>{html.escape(reply)}</Message></Response>'
     return Response(twiml, content_type="application/xml")
-Commit & push
