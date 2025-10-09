@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: companion-factory
+    runtime: python
+    plan: free
+    autoDeploy: true
+    region: frankfurt
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: TIMEZONE
+        value: Europe/Paris
+      - key: INTERNAL_TOKEN
+        sync: false       # ⚠️ à définir dans Render (pas dans git)
+      - key: OPENAI_API_KEY
+        sync: false       # ⚠️ à définir dans Render (pas dans git)
+    buildCommand: pip install -r requirements.txt || pip install flask python-dotenv requests
+    startCommand: python server.py
+    healthCheckPath: /health
