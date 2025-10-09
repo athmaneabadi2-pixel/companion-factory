@@ -15,5 +15,5 @@ services:
       - key: OPENAI_API_KEY
         sync: false       # ⚠️ à définir dans Render (pas dans git)
     buildCommand: pip install -r requirements.txt || pip install flask python-dotenv requests
-    startCommand: python server.py
+    startCommand: gunicorn -w 1 -k gthread -b 0.0.0.0:$PORT server:app
     healthCheckPath: /health
