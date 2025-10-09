@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+import html
 from dotenv import load_dotenv; load_dotenv()
 import os
 app = Flask(__name__)
@@ -16,3 +17,13 @@ if __name__ == "__main__":
     import os
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+@app.post("/twilio/inbound")
+def twilio_inbound():
+    # Twilio envoie du form-urlencoded
+    body = request.form.get("Body", "").strip()
+    # Réponse TwiML minimale (SMS/WhatsApp)
+    reply = f"Echo: {body or '👋 hello from Companion Factory on Render'}"
+    twiml = f'<?xml version="1.0" encoding="UTF-8"?><Response><Message>{html.escape(reply)}</Message></Response>'
+    return Response(twiml, content_type="application/xml")
+Commit & push
