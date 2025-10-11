@@ -14,7 +14,7 @@ services:
         sync: false       # ⚠️ à définir dans Render (pas dans git)
       - key: OPENAI_API_KEY
         sync: false       # ⚠️ à définir dans Render (pas dans git)
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: .venv/bin/gunicorn -w 1 -k gthread -b 0.0.0.0:$PORT server:app
 
-    startCommand: gunicorn -w 1 -k gthread -b 0.0.0.0:$PORT server:app
     healthCheckPath: /health
