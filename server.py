@@ -1,33 +1,51 @@
+# --- haut de fichier ---
 from flask import Flask, request, jsonify, Response
-import html
-from dotenv import load_dotenv; load_dotenv()
-import os
+import os, html, logging
+
+# LLM (OpenAI) optionnel
+try:
+    from openai import OpenAI
+except Exception:
+    OpenAI = None
+
 app = Flask(__name__)
-@app.get("/health")
-def health(): return jsonify(status="ok"), 200
-@app.post("/internal/send")
-def internal_send():
-    expected = os.getenv("INTERNAL_TOKEN", "dev-123")
-    if request.headers.get("X-Token","") != expected: return jsonify(error="forbidden"), 403
-    if request.args.get("format")=="text":
-        data = request.get_json(silent=True) or {}
-        return (data.get("text",""), 200, {"Content-Type":"text/plain; charset=utf-8"})
-    return jsonify(ok=True), 200
-if __name__ == "__main__":
-    import os
-    port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+log = app.logger
+
+# --- endpoints existants /health, /internal/send ... ---
+
+def _twiml_text(message: str) -> Response:
+    twiml = f'<?xml version="1.0" encoding="UTF-8"?><Response><Message>{html.escape(message)}</Message></Response>'
+    return Response(twiml, content_type="application/xml")
+
+def llm_reply(user_text: str) -> str:
+    """Réponse LLM courte et chaleureuse. Fallback -> echo si erreur/clé absente."""
+    key = os.getenv("OPENAI_API_KEY", "")
+    if not key or OpenAI is None:
+        return f"Echo: {user_text}"
+    try:
+        client = OpenAI(api_key=key)
+        sys_prompt = os.getenv("SYSTEM_PROMPT", "Tu es un compagnon chaleureux et concis. Réponds en une phrase.")
+        resp = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": sys_prompt},
+                {"role": "user", "content": user_text or "Dis bonjour."},
+            ],
+            max_tokens=120,
+            temperature=0.6,
+        )
+        return (resp.choices[0].message.content or "").strip() or f"Echo: {user_text}"
+    except Exception as e:
+        log.exception("LLM error")
+        return f"Echo: {user_text}"
 
 @app.post("/twilio/inbound")
 def twilio_inbound():
-    # Twilio envoie du form-urlencoded
-    body = request.form.get("Body", "").strip()
-    # Réponse TwiML minimale (SMS/WhatsApp)
-    reply = f"Echo: {body or '👋 hello from Companion Factory on Render'}"
-    twiml = f'<?xml version="1.0" encoding="UTF-8"?><Response><Message>{html.escape(reply)}</Message></Response>'
-    return Response(twiml, content_type="application/xml")
+    body = (request.form.get("Body") or "").strip()
+    reply = llm_reply(body) if body else "👋 Dis-moi quelque chose."
+    return _twiml_text(reply)
 
+# Alias pour anciennes configs Twilio
 @app.post("/whatsapp/webhook")
 def whatsapp_webhook():
-    # Alias pour anciennes configs Twilio
     return twilio_inbound()
